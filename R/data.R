@@ -10,3 +10,130 @@
 #' }
 #' @source \url{https://balima.shinyapps.io/kars/}
 "abs"
+
+#' Waiting list with transplant candidates' information.
+#'
+#' A dataset containing demographics and medical information for a group of transplant candidates.
+#'
+#' @format A data frame with 500 rows and 12 variables:
+#' \describe{
+#'   \item{ID}{Candidates' identifier}
+#'   \item{bg}{Candidates' blood group}
+#'   \item{A1}{HLA-A allele 1}
+#'   \item{A2}{HLA-A allele 2}
+#'   \item{B1}{HLA-B allele 1}
+#'   \item{B2}{HLA-B allele 2}
+#'   \item{DR1}{HLA-DR allele 1}
+#'   \item{DR2}{HLA-DR allele 2}
+#'   \item{age}{Candidates' age in years}
+#'   \item{dialysis}{Candidates' time on dialysis in months}
+#'   \item{cPRA}{Candidates' cPRA percentage}
+#'   \item{urgent}{clinical urgency 0/1}
+#'   ...
+#' }
+#' @source \url{https://balima.shinyapps.io/kars/}
+"candidates"
+
+#'  Kidney donors' information.
+#'
+#' A dataset containing demographics and medical information for a pool of donors.
+#'
+#' @format A data frame with 70 rows and 9 variables:
+#' \describe{
+#'   \item{ID}{Donors' identifier}
+#'   \item{bg}{Donors' blood group}
+#'   \item{A1}{HLA-A allele 1}
+#'   \item{A2}{HLA-A allele 2}
+#'   \item{B1}{HLA-B allele 1}
+#'   \item{B2}{HLA-B allele 2}
+#'   \item{DR1}{HLA-DR allele 1}
+#'   \item{DR2}{HLA-DR allele 2}
+#'   \item{age}{Donors' age in years}
+#'   ...
+#' }
+#' @source \url{https://balima.shinyapps.io/kars/}
+"donors"
+
+#' HLA-A relative frequencies.
+#'
+#' A dataset containing HLA-A allele relative frequencies from portuguese donors used for MMP computation.
+#'
+#' @format A data frame with 20 rows and 3 variables:
+#' \describe{
+#'   \item{A}{HLA-A allele}
+#'   \item{n}{allele counts}
+#'   \item{freq}{allele frequencies}
+#'   ...
+#' }
+#' @source \url{https://www.slideshare.net/balima78/lima-2013}
+"hlaApt"
+
+#' HLA-B relative frequencies.
+#'
+#' A dataset containing HLA-B allele relative frequencies from portuguese donors used for MMP computation.
+#'
+#' @format A data frame with 34 rows and 3 variables:
+#' \describe{
+#'   \item{B}{HLA-B allele}
+#'   \item{n}{allele counts}
+#'   \item{freq}{allele frequencies}
+#'   ...
+#' }
+#' @source \url{https://www.slideshare.net/balima78/lima-2013}
+"hlaBpt"
+
+#' HLA-DR relative frequencies.
+#'
+#' A dataset containing HLA-DR allele relative frequencies from portuguese donors used for MMP computation.
+#'
+#' @format A data frame with 13 rows and 3 variables:
+#' \describe{
+#'   \item{DR}{HLA-DR allele}
+#'   \item{n}{allele counts}
+#'   \item{freq}{allele frequencies}
+#'   ...
+#' }
+#' @source \url{https://www.slideshare.net/balima78/lima-2013}
+"hlaDRpt"
+
+#' HLA-A relative frequencies.
+#'
+#' A dataset containing HLA-A allele relative frequencies from EuroTransplant donors used for MMP computation.
+#'
+#' @format A data frame with 27 rows and 3 variables:
+#' \describe{
+#'   \item{A}{HLA-A allele}
+#'   \item{n}{allele counts}
+#'   \item{freq}{allele frequencies}
+#'   ...
+#' }
+#' @source \url{https://www.eurotransplant.org/wp-content/uploads/2020/01/H4-Kidney.pdf}
+"hlaAet"
+
+#' HLA-B relative frequencies.
+#'
+#' A dataset containing HLA-B allele relative frequencies from EuroTransplant donors used for MMP computation.
+#'
+#' @format A data frame with 57 rows and 3 variables:
+#' \describe{
+#'   \item{B}{HLA-B allele}
+#'   \item{n}{allele counts}
+#'   \item{freq}{allele frequencies}
+#'   ...
+#' }
+#' @source \url{https://www.eurotransplant.org/wp-content/uploads/2020/01/H4-Kidney.pdf}
+"hlaBet"
+
+#' HLA-DR relative frequencies.
+#'
+#' A dataset containing HLA-DR allele relative frequencies from EuroTransplant donors used for MMP computation.
+#'
+#' @format A data frame with 18 rows and 3 variables:
+#' \describe{
+#'   \item{DR}{HLA-DR allele}
+#'   \item{n}{allele counts}
+#'   \item{freq}{allele frequencies}
+#'   ...
+#' }
+#' @source \url{https://www.eurotransplant.org/wp-content/uploads/2020/01/H4-Kidney.pdf}
+"hlaDRet"
