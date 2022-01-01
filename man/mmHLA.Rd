@@ -4,7 +4,14 @@
 \alias{mmHLA}
 \title{number of HLA mismatchs}
 \usage{
-mmHLA(dA, dB, dDR, cA, cB, cDR)
+mmHLA(
+  dA = c("01", "02"),
+  dB = c("05", "07"),
+  dDR = c("01", "04"),
+  cA = c("01", "02"),
+  cB = c("03", "15"),
+  cDR = c("04", "07")
+)
 }
 \arguments{
 \item{dA}{donor's HLA-A typing}

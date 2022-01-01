@@ -8,7 +8,7 @@
 #' @examples
 #' abo(cABO = 'A', dABO = 'A', iso = TRUE)
 #' @export
-abo <- function(cABO, dABO, iso){
+abo <- function(cABO = 'A', dABO = 'A', iso = TRUE){
 
   if(iso == TRUE){
     value <- cABO == dABO
@@ -41,7 +41,8 @@ abo <- function(cABO, dABO, iso){
 #' @examples
 #' mmHLA(dA = c('01','02'), dB = c('05','07'), dDR = c('01','04'), cA = c('01','02'), cB = c('03','15'), cDR = c('04','07'))
 #' @export
-mmHLA <- function(dA, dB, dDR, cA, cB, cDR){
+mmHLA <- function(dA = c('01','02'), dB = c('05','07'), dDR = c('01','04'),
+                  cA = c('01','02'), cB = c('03','15'), cDR = c('04','07')){
 
   # mismatchs HLA-A
   mmA <- ifelse(dA[1] %in% cA & dA[2] %in% cA, 0,
@@ -123,4 +124,87 @@ sp <- function(dage, cage){
   value <- ifelse(dage >= 65 & cage >= 65, 1,
                   ifelse(dage < 65 & cage < 65, 2,3))
   return(value)
+}
+
+#' TRANSPLANTSCORE (Tx Score)
+#'
+#' @description Returns the estimated 5-year event (mortality or graft failure combined outcome) probability as described by Molnar, el al (2017).
+#' @param ageR A numeric value with recipient's age
+#' @param race A character value with recipient's race from the options: 'White', 'Black', 'Hispanic', 'Other'
+#' @param causeESRD A numeric value with recipient's cause of End-Stage Renal Disease, with options: 'Other', 'Diabetes', 'Hypertension', 'Glomerulonephritis', 'Cystic disease'
+#' @param timeD A numeric value with recipient's time on dialysis (months)
+#' @param diabetesR A logical value with recipient's diabetic status
+#' @param coronary A logical value with recipient's coronary artery disease status
+#' @param albumin A numeric value with recipient's albumin (g/dL)
+#' @param hemoglobin A numeric value with recipient's hemoglobin (g/dL)
+#' @param ageD A numeric value with donor's age
+#' @param diabetesD A logical value with donor's diabetic status, with options: 'Absence', 'Presence', 'Unknown'
+#' @param ECD A logical value regarding Extended Criteria Donor
+#' @param mmHLA_A A numeric value (0, 1, 2) with the number of HLA-A mismatchs
+#' @param mmHLA_B A numeric value (0, 1, 2) with the number of HLA-B mismatchs
+#' @param mmHLA_DR A numeric value (0, 1, 2) with the number of HLA-DR mismatchs
+#' @return 5 year probability for combined outcome of mortality or graft failure
+#' @examples
+#' txscore(ageR = 20, race = "White", causeESRD = "Other", timeD = 12, diabetesR = F, coronary = F, albumin = 1.5, hemoglobin = 10, ageD = 30, diabetesD = "Absence", ECD = F, mmHLA_A = 0, mmHLA_B = 0, mmHLA_DR = 0)
+#' @source \url{https://balima.shinyapps.io/scoreTx/}
+#' @export
+txscore <- function(ageR = 20
+                    , race = "White"
+                    #, insurance = 0
+                    , causeESRD = "Other"
+                    , timeD = 12 #
+                    , diabetesR = F
+                    , coronary = F
+                    , albumin = 1.5
+                    , hemoglobin = 10
+                    , ageD = 30
+                    , diabetesD = "Absence"
+                    , ECD = F
+                    #, mmHLA = "0"
+                    , mmHLA_A = 0
+                    , mmHLA_B = 0
+                    , mmHLA_DR = 0
+){
+
+  mmHLA_ <- as.numeric(mmHLA_A) + as.numeric(mmHLA_B) + as.numeric(mmHLA_DR)
+  mmHLA <- ifelse(mmHLA_ == 0 , '0',
+                  ifelse(mmHLA_ < 4, '1-3', '4-6'))
+
+  ageR <- ifelse(ageR < 35 , 0.0993,
+                 ifelse(ageR <50 , -0.0784,
+                        ifelse(ageR < 65, 0, 0.1881)))
+  race <- ifelse(race == "White", 0,
+                 ifelse(race == "Black", 0.1609,
+                        ifelse(race == "Hispanic", -0.2554, -0.4475)))
+  causeESRD <- ifelse(causeESRD == "Diabetes", 0,
+                      ifelse(causeESRD == "Hypertension", 0.1541,
+                             ifelse(causeESRD == "Glomerulonephritis", 0.1447,
+                                    ifelse(causeESRD == "Cystic Disease", -0.1870, 0.3209))))
+  timeD <- ifelse(timeD < 12, 0,
+                  ifelse(timeD < 36, -0.2618,
+                         ifelse(timeD < 61, -0.3747, -0.1432)))
+  diabetesR <- ifelse(diabetesR == T, 0.3021, 0)
+  coronary <- ifelse(coronary == T, 0.2617, 0)
+  albumin <- (albumin - 4)*(-0.2644)
+  hemoglobin <- (hemoglobin - 12.3)*(-0.0451)
+  ageD <- (ageD - 39)*0.0059
+  diabetesD <- ifelse(diabetesD == "Absence", 0,
+                      ifelse(diabetesD == "Presence", 0.4596, -0.3308))
+  ECD <- ifelse(ECD == T, 0.2082, 0)
+  mmHLA <- ifelse(mmHLA == "0" , 0,
+                  ifelse(mmHLA == "1-3", 0.3241, 0.3115))
+
+  LP <- ageR + race + causeESRD + timeD + diabetesR + coronary + albumin + hemoglobin + ageD + diabetesD + ECD + mmHLA
+
+  gamma <- 0.916
+
+  PS = gamma * LP
+
+  prob5y <- round((1-0.752292^exp(PS))*100,2)
+
+  list(LP = LP
+       , gamma = gamma
+       , PS = PS
+       , prob5y = prob5y)
+
 }

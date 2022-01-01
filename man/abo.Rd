@@ -4,7 +4,7 @@
 \alias{abo}
 \title{test for ABO compatibility}
 \usage{
-abo(cABO, dABO, iso)
+abo(cABO = "A", dABO = "A", iso = TRUE)
 }
 \arguments{
 \item{cABO}{A character from 'A', 'B', 'AB', 'O'}

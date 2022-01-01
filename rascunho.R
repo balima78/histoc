@@ -3,6 +3,7 @@ usethis::use_package("dplyr")
 usethis::use_testthat()
 
 library(tidyverse)
+library(data.table)
 
 # Edit one or more files below R/.
 # document() (if you’ve made any changes that impact help files or NAMESPACE)
@@ -20,3 +21,5 @@ donors.uk <- read.csv2("D:/2.PhD/HEADS/kars/files/donors.uk.csv")
 dim(donors.uk)
 
 usethis::use_data(donors.uk)
+
+# https://rich-iannone.github.io/pointblank/articles/VALID-III.html
