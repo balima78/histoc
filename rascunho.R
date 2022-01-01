@@ -1,3 +1,7 @@
+usethis::use_package("dplyr")
+
+usethis::use_testthat()
+
 library(tidyverse)
 
 # Edit one or more files below R/.
@@ -11,11 +15,8 @@ devtools::document()
 devtools::load_all()
 devtools::test()
 
-donors <- read.csv2("D:/2.PhD/HEADS/kars/files/donors.csv")
-candidates$urgent <- 0
-dim(donors)
+donors.uk <- read.csv2("D:/2.PhD/HEADS/kars/files/donors.uk.csv")
+#donors.uk$urgent <- 0
+dim(donors.uk)
 
-hlaDRet <- read.csv2("D:/2.PhD/HEADS/kars/files/hlaDRet.csv")
-dim(hlaDRet)
-
-usethis::use_data(donors)
+usethis::use_data(donors.uk)
