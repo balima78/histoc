@@ -39,27 +39,45 @@ abo <- function(cABO = 'A', dABO = 'A', iso = TRUE){
 #' mmDR number of HLA-DR mismatchs between \code{dA}DRand \code{cDR};
 #' and mmHLA as the sum of mmA + mmB + mmDR
 #' @examples
-#' mmHLA(dA = c('01','02'), dB = c('05','07'), dDR = c('01','04'), cA = c('01','02'), cB = c('03','15'), cDR = c('04','07'))
+#' mmHLA(dA = c('1','2'), dB = c('5','7'), dDR = c('1','4'), cA = c('1','2'), cB = c('03','15'), cDR = c('04','07'))
 #' @export
-mmHLA <- function(dA = c('01','02'), dB = c('05','07'), dDR = c('01','04'),
-                  cA = c('01','02'), cB = c('03','15'), cDR = c('04','07')){
+mmHLA <- function(dA = c('1','2'), dB = c('5','7'), dDR = c('1','4'),
+                  cA = c('1','2'), cB = c('3','15'), cDR = c('4','7')){
 
-  # mismatchs HLA-A
-  mmA <- ifelse(dA[1] %in% cA & dA[2] %in% cA, 0,
-                ifelse(dA[1] %in% cA | dA[2] %in% cA, 1, 2) )
-  # mismatchs HLA-B
-  mmB <- ifelse(dB[1] %in% cB & dB[2] %in% cB, 0,
-                ifelse(dB[1] %in% cB | dB[2] %in% cB, 1, 2) )
-  # mismatchs HLA-DR
-  mmDR <- ifelse(dDR[1] %in% cDR & dDR[2] %in% cDR, 0,
-                ifelse(dDR[1] %in% cDR | dDR[2] %in% cDR, 1, 2) )
+  mmA = NULL
+  mmB = NULL
+  mmDR = NULL
 
-  mmHLA <- mmA + mmB + mmDR
+  # verify function parameters
+  if(!is.character(dA)){stop("donor's HLA-A typing is not valid!\n")}
+  if(!is.character(dB)){stop("donor's HLA-B typing is not valid!\n")}
+  if(!is.character(dDR)){stop("donor's HLA-DR typing is not valid!\n")}
+  if(!is.character(cA)){stop("candidate's HLA-A typing is not valid!\n")}
+  if(!is.character(cB)){stop("candidate's HLA-B typing is not valid!\n")}
+  if(!is.character(cDR)){stop("candidate's HLA-DR typing is not valid!\n")}
 
-  list(mmHLA = mmHLA,
-       mmA = mmA,
-       mmB = mmB,
-       mmDR = mmDR)
+  # compute missmatches
+  mmA<-if_else((dA[1] %in% cA & dA[2] %in% cA) | (dA[1] %in% cA & (is.na(dA[2]) | dA[2] == "")), 0,
+               if_else(dA[1] %in% cA | dA[2] %in% cA, 1,
+                       if_else(!dA[1] %in% cA & (is.na(dA[2]) | dA[2] == ""), 1,
+                               if_else(dA[1] == dA[2], 1,2))))
+
+  mmB<-if_else((dB[1] %in% cB & dB[2] %in% cB) | (dB[1] %in% cB & (is.na(dB[2]) | dB[2] == "")), 0,
+               if_else(dB[1] %in% cB | dB[2] %in% cB, 1,
+                       if_else(!dB[1] %in% cB & (is.na(dB[2]) | dB[2] == ""), 1,
+                               if_else(dB[1] == dB[2], 1,2))))
+
+  mmDR<-if_else((dDR[1] %in% cDR & dDR[2] %in% cDR) | (dDR[1] %in% cDR & (is.na(dDR[2]) | dDR[2] == "")), 0,
+                if_else(dDR[1] %in% cDR | dDR[2] %in% cDR, 1,
+                        if_else(!dDR[1] %in% cDR & (is.na(dDR[2]) | dDR[2] == ""), 1,
+                                if_else(dDR[1] == dDR[2],1,2))))
+
+  # resume results
+  mmHLA = mmA + mmB + mmDR
+  mm = c(mmA,mmB,mmDR,mmHLA)
+  names(mm) <- c("mmA","mmB","mmDR","mmHLA")
+
+  return(mm)
 }
 
 #' virtual crossmatch (XM)
@@ -69,11 +87,14 @@ mmHLA <- function(dA = c('01','02'), dB = c('05','07'), dDR = c('01','04'),
 #' @param dB donor's HLA-B typing
 #' @param dDR donor's HLA-DR typing
 #' @param df.abs data frame with candidates' antibodies
-#' @return A dataframe with candidates' ID and XM result POS/NEG
+#' @return A dataframe with candidates' ID and xm result POS/NEG
 #' @examples
-#' xmatch(dA = c('01','02'), dB = c('05','07'), dDR = c('01','04'), df.abs = abs)
+#' xmatch(dA = c('1','2'), dB = c('5','7'), dDR = c('1','4'), df.abs = cabs)
 #' @export
-xmatch <- function(dA, dB, dDR, df.abs){
+xmatch <- function(dA = c('1','2'),
+                   dB = c('5','7'),
+                   dDR = c('1','4'),
+                   df.abs = cabs){
 
   if (!requireNamespace("dplyr", quietly = TRUE)) {
     stop(
@@ -104,7 +125,7 @@ xmatch <- function(dA, dB, dDR, df.abs){
 #' @examples
 #' hiper(cPRA = 99, cutoff = 85)
 #' @export
-hiper <- function(cPRA, cutoff){
+hiper <- function(cPRA, cutoff = 85){
 
   value <- cPRA >= cutoff
   return(value)

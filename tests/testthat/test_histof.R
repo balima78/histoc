@@ -15,42 +15,42 @@ test_that("computes HLA mismatchs", {
                      dDR = c('01','04'),
                      cA = c('01','02'),
                      cB = c('03','15'),
-                     cDR = c('04','07'))$mmA, 0)
+                     cDR = c('04','07'))[['mmA']], 0)
   expect_equal(mmHLA(dA = c('01','02'),
                      dB = c('05','07'),
                      dDR = c('01','04'),
                      cA = c('01','02'),
                      cB = c('03','15'),
-                     cDR = c('04','07'))$mmB, 2)
+                     cDR = c('04','07'))[['mmB']], 2)
   expect_equal(mmHLA(dA = c('01','02'),
                      dB = c('05','07'),
                      dDR = c('01','04'),
                      cA = c('01','02'),
                      cB = c('03','15'),
-                     cDR = c('04','07'))$mmDR, 1)
+                     cDR = c('04','07'))[['mmDR']], 1)
   expect_equal(mmHLA(dA = c('01','02'),
                      dB = c('05','07'),
                      dDR = c('01','04'),
                      cA = c('01','02'),
                      cB = c('03','15'),
-                     cDR = c('04','07'))$mmHLA, 3)
+                     cDR = c('04','07'))[['mmHLA']], 3)
 })
 
 test_that("virtual crossmatch", {
   xmatch(dA = c('1','2'),
          dB = c('5','7'),
          dDR = c('1','4'),
-         df.abs = abs)$xm %>% .[1] %>%
+         df.abs = cabs)$xm %>% .[1] %>%
     expect_equal("NEG")
   xmatch(dA = c('1','2'),
          dB = c('5','7'),
          dDR = c('1','4'),
-         df.abs = abs)$xm %>% .[6] %>%
+         df.abs = cabs)$xm %>% .[6] %>%
     expect_equal("POS")
   xmatch(dA = c('1','2'),
          dB = c('5','7'),
          dDR = c('1','4'),
-         df.abs = abs)$xm %>% .[10] %>%
+         df.abs = cabs)$xm %>% .[10] %>%
     expect_equal("POS")
 })
 

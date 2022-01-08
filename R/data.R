@@ -9,7 +9,7 @@
 #'   ...
 #' }
 #' @source \url{https://balima.shinyapps.io/kars/}
-"abs"
+"cabs"
 
 #' Waiting list with transplant candidates' information.
 #'

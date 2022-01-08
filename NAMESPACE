@@ -3,6 +3,7 @@
 export(abo)
 export(cp)
 export(hiper)
+export(lima1)
 export(mmHLA)
 export(sp)
 export(txscore)

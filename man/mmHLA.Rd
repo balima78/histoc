@@ -5,12 +5,12 @@
 \title{number of HLA mismatchs}
 \usage{
 mmHLA(
-  dA = c("01", "02"),
-  dB = c("05", "07"),
-  dDR = c("01", "04"),
-  cA = c("01", "02"),
-  cB = c("03", "15"),
-  cDR = c("04", "07")
+  dA = c("1", "2"),
+  dB = c("5", "7"),
+  dDR = c("1", "4"),
+  cA = c("1", "2"),
+  cB = c("3", "15"),
+  cDR = c("4", "7")
 )
 }
 \arguments{
@@ -36,5 +36,5 @@ and mmHLA as the sum of mmA + mmB + mmDR
 Computes the number of HLA mismatchs between donor and candidate
 }
 \examples{
-mmHLA(dA = c('01','02'), dB = c('05','07'), dDR = c('01','04'), cA = c('01','02'), cB = c('03','15'), cDR = c('04','07'))
+mmHLA(dA = c('1','2'), dB = c('5','7'), dDR = c('1','4'), cA = c('1','2'), cB = c('03','15'), cDR = c('04','07'))
 }

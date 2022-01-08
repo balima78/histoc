@@ -4,7 +4,7 @@
 \alias{xmatch}
 \title{virtual crossmatch (XM)}
 \usage{
-xmatch(dA, dB, dDR, df.abs)
+xmatch(dA = c("1", "2"), dB = c("5", "7"), dDR = c("1", "4"), df.abs = cabs)
 }
 \arguments{
 \item{dA}{donor's HLA-A typing}
@@ -16,11 +16,11 @@ xmatch(dA, dB, dDR, df.abs)
 \item{df.abs}{data frame with candidates' antibodies}
 }
 \value{
-A dataframe with candidates' ID and XM result POS/NEG
+A dataframe with candidates' ID and xm result POS/NEG
 }
 \description{
 returns candidates' virtual crossmatch againts donor's HLA typing
 }
 \examples{
-xmatch(dA = c('01','02'), dB = c('05','07'), dDR = c('01','04'), df.abs = abs)
+xmatch(dA = c('1','2'), dB = c('5','7'), dDR = c('1','4'), df.abs = cabs)
 }
