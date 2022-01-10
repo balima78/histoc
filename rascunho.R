@@ -31,11 +31,37 @@ library(tidyverse)
 library(data.table)
 lima1()
 
+pts_PRA(cPRA = 79)
+
+pts_HLA(
+  dA = c('1','2'), dB = c('3','16'), dDR = c('4','7'),
+  cA = c('1','2'), cB = c('3','15'), cDR = c('4','4')
+)
+
+mmHLA(dA = c('1','2'), dB = c('3','15'), dDR = c('7','7'),
+      cA = c('1','2'), cB = c('3','15'), cDR = c('4','4'))
 
 library(tictoc)
 tic()
-lima1() #data.table::merge.data.table --0.44
+pt1() #data.table::merge.data.table --0.44
 toc()
 
 
-lima1()
+pt1() %>% view()
+
+merge(candidates,
+      xmatch(),
+      all.x=TRUE) %>%
+  #rowwise() %>%
+  mutate(ptsdial = 0.1 * dialysis)
+
+
+pts_HLA(mm.A = 0
+        , mm.B = 1
+        , mm.DR = 0)
+
+a <- list('mmA' = 0,
+     'mmB' = 0,
+     'mmDR' = 0,
+     'mmHLA' = 0)
+a[['mmA']]
